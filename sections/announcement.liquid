@@ -1,0 +1,117 @@
+{%- if section.settings.enable_bar -%}
+  {%- unless section.settings.home_page_only and template != 'index' -%}
+    <section id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="announcement-bar">
+      <div class="AnnouncementBar">
+        <div class="AnnouncementBar__Wrapper">
+          <p class="AnnouncementBar__Content Heading">
+            {% comment %}
+            LOGIC BELOW... 
+            ASSIGN A CUSTOMER A DISCOUNT IF THEY HAVE ONE OF THE MAGIG TAGS
+            {% endcomment %}
+            
+            {% assign discount = 'none' %}
+
+            {% if customer.tags contains 'Frame Owner' or customer.tags contains '10%' or customer.tags contains '20%' or customer.tags contains '30%' or customer.tags contains '40%' or customer.tags contains 'EP' or customer.tags contains 'Industry' or customer.tags contains 'Wholesale' or customer.tags contains 'Grassroots' %}
+            {% assign discount = 'discount' %}
+            {% endif %}
+            
+            {% comment %}
+            LOGIC BELOW... 
+            IF A CUSTOMER HAS A DISCOUNT, APPLY OUR CUSTOM MESSAGING. 
+            {% endcomment %}
+            {% if customer %}
+            
+            {% if discount == 'none'%}
+            
+              {% if section.settings.link %}
+              <a href="{{ section.settings.link }}">{{ section.settings.content | escape }}</a>
+              {% else %}
+              {{ section.settings.content | escape }}
+              {% endif %}
+            
+            {% else %}
+            
+            	Welcome {{ customer.first_name}}! You receive <b class="banner-tag">exclusive pricing</b> on select items!
+            
+            {% endif %}
+            
+            {% else %}
+            
+            {% if section.settings.link %}
+	            <a href="{{ section.settings.link }}">{{ section.settings.content | escape }}</a>
+            {% else %}
+	            {{ section.settings.content | escape }}
+            {% endif %}
+            {% endif %}
+
+            {% comment %}
+            	Welcome {{ customer.first_name}}. {{ section.settings.content | escape }}
+            	{% else %}
+            		
+            	{% endif %}
+            {% elsif section.settings.link %}
+              <a href="{{ section.settings.link }}">{{ section.settings.content | escape }}</a>
+            {% else %}
+              {{ section.settings.content | escape }}
+            {% endif %}
+            {% endcomment %}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      #section-{{ section.id }} {
+        background: {{ section.settings.background }};
+        color: {{ section.settings.text_color }};
+      }
+    </style>
+
+    <script>
+      document.documentElement.style.setProperty('--announcement-bar-height', document.getElementById('shopify-section-announcement').offsetHeight + 'px');
+    </script>
+  {%- endunless -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_bar",
+      "label": "Enable bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "home_page_only",
+      "label": "Home page only",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "content",
+      "label": "Text",
+      "default": "Announce something here"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    }
+  ]
+}
+{% endschema %}

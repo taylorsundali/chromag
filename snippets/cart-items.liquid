@@ -1,0 +1,196 @@
+{%- assign for_drawer = true -%}
+
+{%- if template == 'cart' or template == 'cart.ajax' -%}
+  {%- assign for_drawer = false -%}
+{%- endif -%}
+
+<div class="Cart__ItemList">
+  {%- unless for_drawer -%}
+    <div class="Cart__Head hidden-phone">
+      <span class="Cart__HeadItem Heading Text--subdued u-h7">{{ 'cart.items.product' | t }}</span>
+      <span class="Cart__HeadItem"></span>
+      <span class="Cart__HeadItem Heading Text--subdued u-h7" style="text-align: center">{{ 'cart.items.quantity' | t }}</span>
+      <span class="Cart__HeadItem Heading Text--subdued u-h7" style="text-align: right">{{ 'cart.items.total' | t }}</span>
+    </div>
+  {%- endunless -%}
+  
+  {% comment %}
+    Taylor's code to determine pricing logic below
+  {% endcomment %}
+      {% if customer.tags contains "10%" or customer.tags contains "Frame Owner" or customer.tags contains "10% Locals" or customer.tags contains "10% Frame Owner"%}
+        {% assign priceMultiplier = 0.9 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "20%" or customer.tags contains "20% Good Guy" %}
+        {% assign priceMultiplier = 0.8 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "30%" or customer.tags contains "30% Friends & Family" %}
+        {% assign priceMultiplier = 0.7 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "40%" or customer.tags contains "EP" or customer.tags contains "40% Industry" %}
+        {% assign priceMultiplier = 0.6 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "Industry" or customer.tags contains "Wholesale" or customer.tags contains "50% EP & Wholesale" %}
+        {% assign priceMultiplier = 0.5 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "Grassroots" or customer.tags contains "60% Grassroots & OEM" %}
+        {% assign priceMultiplier = 0.4 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+
+  {%- for line_item in cart.items -%}
+{%- include 'bold-options-hybrid-cart-item' with item -%}
+    {%- if for_drawer -%}
+      <div class="CartItemWrapper">
+    {%- endif -%}
+
+    <div class="CartItem">
+      <div class="CartItem__ImageWrapper AspectRatio">
+        <div class="AspectRatio" style="--aspect-ratio: {{ line_item.image.aspect_ratio }}">
+          <img class="CartItem__Image" src="{{ line_item.image | img_url: '240x' }}" alt="{{ line_item.image.alt | escape }}">
+        </div>
+      </div>
+
+      <div class="CartItem__Info">
+        <h2 class="CartItem__Title Heading">
+          <a href="{{ line_item.url }}">{{ line_item.product.title }}</a>
+        </h2>
+
+        <div class="CartItem__Meta Heading Text--subdued">
+          {%- unless line_item.product.has_only_default_variant -%}
+            <p class="CartItem__Variant">{{ line_item.variant.title }}</p>
+          {%- endunless -%}
+
+          {%- if line_item.properties != empty -%}
+            <ul class="CartItem__PropertyList">
+              {%- for property in line_item.properties -%}
+				{%- if property.first.first == '_' -%}{%- continue -%}{%- endif -%}
+                {%- assign first_character_in_key = property.first | truncate: 1, '' -%}
+
+                {%- if property.last == blank or first_character_in_key == '_' -%}
+                  {%- continue -%}
+                {%- endif -%}
+
+                <li class="CartItem__Property">{{ property.first }}: {{ property.last }}</li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+          {% comment %}
+          {% comment %}ORIGINAL CODE THAT WAS HERE BEFOREHAND BETWEEN 87 AND 93{% endcomment %}
+          <div class="CartItem__PriceList">
+            {%- if line_item.original_price > line_item.price -%}
+              <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.price | money_without_trailing_zeros }}</span>
+              <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible>{{ line_item.original_price | money_without_trailing_zeros }}</span>
+            {%- else -%}
+              <span class="CartItem__Price Price" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price_2" style="display:none !important;"></span>{{ line_item.price | money_without_trailing_zeros }}</span>
+            {%- endif -%}
+          {% endcomment %}
+          
+          
+          <div class="CartItem__PriceList">
+            {% comment %}IF THE ORIGINAL LINE ITEM PRICE IS GREATER THAN THE ACTUAL, IT'S ON SALE. DISPLAY AS SUCH{% endcomment %}
+            {%- if line_item.original_price > line_item.price -%}
+              <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price_3" style="display:none !important;"></span>{{ line_item.price | money_without_trailing_zeros }}</span>
+              <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible>{{ line_item.original_price | money_without_trailing_zeros }}</span>
+            {% comment %}[FOR SALE ITEMS] IF THE ORIGINAL LINE ITEM PRICE IS GREATER THAN THE ACTUAL, IT'S ON SALE. DISPLAY AS SUCH{% endcomment %}
+            {%- elsif line_item.product.compare_at_price_max > line_item.price -%}
+              <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price_4" style="display:none !important;"></span>{{ line_item.price | money_without_trailing_zeros }}</span>
+              <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible>{{ line_item.product.compare_at_price_max | money_without_trailing_zeros }}</span>
+            {% comment %}FOR ALL NORMALLY PURCAHSED PRODUCTS... DON'T DISPLAY ANY CROSSED OUT PRICES{% endcomment %}
+            {%- else -%}
+              <span class="CartItem__Price Price" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price_5" style="display:none !important;"></span>{{ line_item.price | money_without_trailing_zeros }}</span>
+            {%- endif -%}
+            
+            
+            {% comment %}
+            Taylor's code below. He commented out the line that was originally here directly above
+            {% endcomment %}
+
+			{% comment %}
+            {% if line_item.product.tags contains "Sale" %}
+              <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+            {% else %}
+              {% if customer.tags contains "10%" or customer.tags contains "Frame Owner" or customer.tags contains "10% Locals" or customer.tags contains "10% Frame Owner" or customer.tags contains "20%" or customer.tags contains "30%" or customer.tags contains "40%" or customer.tags contains "EP" or customer.tags contains "Grassroots" or customer.tags contains "20% Good Guy" or customer.tags contains "60% Grassroots & OEM" or customer.tags contains "30% Friends & Family" or customer.tags contains "40% Industry"%}
+                {% if line_item.product.tags contains "Belt" or line_item.product.tags contains "Frame" or line_item.product.tags contains "Pin" or line_item.product.tags contains "Chain stay protector" or line_item.product.tags contains "Chain tug" or line_item.product.tags contains "Bushing removal tool" or line_item.product.tags contains "Bushing installation tool"%}
+                  <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_2" style="display:none !important;"></span>{{ line_item.line_price | times: exceptionPricingMult | money_without_trailing_zeros }}</span>
+                  <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_3" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+                {% elsif product.tags contains "nosale"%}
+            	  <span class="ProductMeta__Price Price Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+                {% else %}
+            	  <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_4" style="display:none !important;"></span>{{ line_item.line_price | times: priceMultiplier | money_without_trailing_zeros }}</span>
+                  <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_5" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+                {% endif %}
+              {% elsif customer.tags contains "Wholesale" or customer.tags contains "Industry" or customer.tags contains "50% EP & Wholesale" %}
+                {% if line_item.product.tags contains "BC Frame" %} 
+            	  <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_6" style="display:none !important;"></span>{{ line_item.line_price | times: 0.7315789474 | money_without_trailing_zeros }}</span>
+                  <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_7" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+                {% elsif line_item.product.tags contains "Taiwanese Frame" %}
+                  <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_8" style="display:none !important;"></span>{{ line_item.line_price | times: 0.7 | money_without_trailing_zeros }}</span>
+                  <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_9" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+                {% elsif  line_item.product.tags contains "Belt" or line_item.product.tags contains "Pin" or line_item.product.tags contains "Chain stay protector" or line_item.product.tags contains "Chain tug" or line_item.product.tags contains "Bushing removal tool" or product.tags contains "Bushing installation tool" %}
+            	  <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_10" style="display:none !important;"></span>{{ line_item.line_price | times: exceptionPricingMult | money_without_trailing_zeros }}</span>
+                  <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_11" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+	            {% elsif product.tags contains "nosale"%}
+            	  <!--<span class="ProductMeta__Price Price Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>-->
+                {% else %}
+            	  <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_12" style="display:none !important;"></span>{{ line_item.line_price | times: priceMultiplier | money_without_trailing_zeros }}</span>
+                  <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_13" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+                {% endif %}
+
+              {% else %}
+                <span class="CartItem__Price Price" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_14" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+              {% endif %}
+            {% endif %}
+            {% endcomment %}
+            
+          </div>
+        </div>
+
+        {%- capture item_actions -%}
+          <div class="CartItem__Actions Heading Text--subdued" style="text-align: center">
+            <div class="CartItem__QuantitySelector">
+              <div class="QuantitySelector">
+                {%- assign quantity_minus_one = line_item.quantity | minus: 1 -%}
+
+                <a class="QuantitySelector__Button Link Link--primary" title="{{ 'cart.items.set_quantity' | t: new_quantity: quantity_minus_one }}" href="/cart/change?quantity={{ quantity_minus_one }}&id={{ line_item.key }}" data-quantity="{{ quantity_minus_one }}" data-line-id="{{ line_item.key }}" data-action="update-item-quantity">
+                  {%- include 'icon' with 'minus' -%}
+                </a>
+
+                <input type="text" name="updates[]" id="updates_{{ line_item.key }}" class="QuantitySelector__CurrentQuantity" pattern="[0-9]*" data-line-id="{{ line_item.key }}" value="{{ line_item.quantity }}" data-id="{{ item.key }}">
+
+                {%- assign quantity_plus_one = line_item.quantity | plus: 1 -%}
+
+                <a class="QuantitySelector__Button Link Link--primary" title="{{ 'cart.items.set_quantity' | t: new_quantity: quantity_plus_one }}" href="/cart/change?quantity={{ quantity_plus_one }}&id={{ line_item.key }}" data-quantity="{{ quantity_plus_one }}" data-line-id="{{ line_item.key }}" data-action="update-item-quantity">
+                  {%- include 'icon' with 'plus' -%}
+                </a>
+              </div>
+            </div>
+
+            <a href="/cart/change?quantity=0&id={{ line_item.key }}" class="CartItem__Remove Link Link--underline Link--underlineShort" data-quantity="0" data-line-id="{{ line_item.key }}" data-action="remove-item">{{ 'cart.items.remove' | t }}</a>
+          </div>
+        {%- endcapture -%}
+
+        {{ item_actions }}
+      </div>
+
+      {%- unless for_drawer -%}
+        {{ item_actions }}
+
+        <span class="CartItem__LinePrice Price Heading Text--subdued u-h7" data-money-convertible style="text-align: right"><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total_15" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+      {%- endunless -%}
+    </div>
+
+    {%- if for_drawer -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

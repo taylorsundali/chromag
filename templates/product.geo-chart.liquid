@@ -1,0 +1,154 @@
+{%- include 'bold-product' with product, hide_action: 'break', output: 'none' -%}
+{% section 'product-template-geo-chart' %}
+
+
+{% comment %}
+CODE TO DETERMINE WHICH GEOMETRY CHART TO SLING
+{% endcomment %}
+
+{% comment %} ROOTDOWN {% endcomment %}
+{% if product.id == 1906145230946 %} 
+  {% section 'rootdown-geo-chart' %}
+
+{% comment %} WIDEANGLE {% endcomment %}
+{% elsif product.id == 1906101223522 or product.id == 1906100830306 %} 
+  {% section 'wideangle-geo-chart' %}
+
+{% comment %} STYLUS {% endcomment %}
+{% elsif product.id == 1906243698786 or product.id == 1906146902114 or product.id == 1906146345058 or product.id == 1906147229794 %} 
+  {% section 'stylus-geo-chart' %}
+
+{% comment %} SURFACE TI FRAME {% endcomment %}
+{% elsif product.id == 1906099945570 %} 
+  {% section 'surface-ti-geo-chart' %}
+
+{% comment %} MONK {% endcomment %}
+{% elsif product.id == 1906127339618 %} 
+  {% section 'monk-geo-chart' %}
+
+
+{% comment %} EVERYTHING ELSE {% endcomment %}
+{% else %} 
+{% section 'ct-geochart' %}
+{% endif %}
+
+
+{% section 'product-template-bottom-geo-chart' %}
+
+{% section 'related-products' %}
+{% section 'recently-viewed-products' %}
+
+<script>
+  <!-- Fancy hover-over effect -->
+    function surface(imgId, allId, geomIcon, rowId){
+      document.getElementById(imgId).style.display = "inline";
+      document.getElementById("ct-g-grey").style.display = "inline";
+      document.getElementById(allId).style.display = "none";
+      document.getElementById(geomIcon).style.backgroundColor = "#000";
+      document.getElementById(rowId).style.backgroundColor = "#C6C6C6";
+    }
+
+    function hide(imgId, allId, rowId, oddeven){
+      document.getElementById(allId).style.display = "inline";
+      document.getElementById(imgId).style.display = "none";
+      document.getElementById("ct-g-grey").style.display = "none";
+      if(oddeven == "odd"){
+        document.getElementById(rowId).style.backgroundColor = "#fff";
+      } else {
+        document.getElementById(rowId).style.backgroundColor = "#fff";
+      }
+      
+    }
+  
+  
+function openTab(evt, tabName) {
+  <!--initiating Vars-->
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("ct-tab-content");
+  tablinks = document.getElementsByClassName("tablinks");
+
+  <!--Hiding all the content by default before moving forward-->
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+                                    
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  <!--Displaying the desired block-->
+  document.getElementById(tabName).style.display = "block";
+
+  <!--??-->
+  evt.currentTarget.className += " active";
+}
+    
+  
+function openTabMob(evt, tabName) {
+  <!--initiating Vars-->
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("ct-tab-content");
+  tablinks = document.getElementsByClassName("tablinks-mobile");
+
+  <!--Hiding all the content by default before moving forward-->
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+                                    
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  <!--Displaying the desired block-->
+  document.getElementById(tabName).style.display = "block";
+
+  <!--appending active to the class to display the right css-->
+  evt.currentTarget.className += " active";
+}
+
+<!--Functions to display more or less content on the Build Specs-->
+function displayLess(evt, short, long){
+    document.getElementById(short).style.display = "table";
+    document.getElementById(long).style.display = "none";
+    document.getElementById('show-more-button').style.display = "block";
+    document.getElementById('show-less-button').style.display = "none";
+}
+
+function displayMore(evt, short, long){
+    document.getElementById(short).style.display = "none";
+    document.getElementById(long).style.display = "table";
+    document.getElementById('show-more-button').style.display = "none";
+    document.getElementById('show-less-button').style.display = "block";
+}
+
+  
+<!--Function to display the geometric chart-->
+function displayGeom(evt, img, less, more){
+  document.getElementById(img).style.display = "block";
+  document.getElementById(less).style.display = "block";
+  document.getElementById(more).style.display = "none";
+}
+  
+function hideGeom(evt, img, less, more){
+  document.getElementById(img).style.display = "none";
+  document.getElementById(less).style.display = "none";
+  document.getElementById(more).style.display = "block";
+}
+  
+  <!--Function to display inches-->
+function displayIn(evt, cmchart, inchart, cmbutt, inbutt){
+  document.getElementById(cmchart).style.display = "none";
+  document.getElementById(inchart).style.display = "table";
+  document.getElementById(cmbutt).style.borderBottom = "none";
+  document.getElementById(inbutt).style.borderBottom = "2px solid #000";
+}
+  
+  <!--Function to display CM-->
+function displayCm(evt, cmchart, inchart, cmbutt, inbutt){
+  document.getElementById(cmchart).style.display = "table";
+  document.getElementById(inchart).style.display = "none";
+  document.getElementById(inbutt).style.borderBottom = "none";
+  document.getElementById(cmbutt).style.borderBottom = "2px solid #000";
+}
+  
+</script>

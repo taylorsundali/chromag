@@ -1,0 +1,131 @@
+<!--
+PRODUCT META IS USED IN THE PRODUCT PAGE SIDEBAR AMONG OTHER LOCATIONS
+-->
+
+<div class="ProductMeta">
+  {%- if section.settings.show_vendor and product.vendor != blank -%}
+    <h2 class="ProductMeta__Vendor Heading u-h6">
+      {%- assign vendor_handle = product.vendor | handle -%}
+      {%- assign collection_for_vendor = collections[vendor_handle] -%}
+
+      {%- unless collection_for_vendor.empty? -%}
+        <a href="{{ collection_for_vendor.url }}">{{ product.vendor }}</a>
+      {%- else -%}
+        {{- product.vendor -}}
+      {%- endunless -%}
+    </h2>
+  {%- endif -%}
+
+  <h1 class="ProductMeta__Title Heading u-h2">
+    {%- if template.name == 'product' -%}
+      {{- product.title -}}
+    {%- else -%}
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    {%- endif -%}
+  </h1>
+  
+  {% include 'breadcrumbs' %}
+
+  {%- if product.template_suffix != 'coming-soon' -%}
+    <div class="ProductMeta__PriceList Heading">
+      
+      {% comment %}
+      <!--CODE THAT WAS HERE TO START FROM ORIGINAL DEVELOPERS-->
+      {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+        <span class="ProductMeta__Price Price Price--highlight Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+        <span class="ProductMeta__Price Price Price--compareAt Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}</span>
+      {%- else -%}
+        <span class="ProductMeta__Price Price Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+      {%- endif -%}
+      <!--END OF CODE THAT WAS HERE TO START-->
+      {% endcomment %}
+      
+      
+      <!--CODE THAT TAYLOR WROTE TO REPLACE IT...-->
+      <!--IF THE PRODUCT IS ON SALE-->
+      {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+        <span class="ProductMeta__Price Price Price--highlight Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+        <span class="ProductMeta__Price Price Price--compareAt Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}</span>
+      <!--ELSE IF THE CUSTOMER HAS SPECIFIC TAGS, RUN THROUGH THE TAG LOGIC AND SUBSEQUENT PRICING LOGIC-->
+      {% else %}
+      {% if customer.tags contains "10%" or customer.tags contains "Frame Owner" or customer.tags contains "10% Locals" or customer.tags contains "10% Frame Owner"%}
+        {% assign priceMultiplier = 0.9 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "20%" or customer.tags contains "20% Good Guy" %}
+        {% assign priceMultiplier = 0.8 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "30%" or customer.tags contains "30% Friends & Family" %}
+        {% assign priceMultiplier = 0.7 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "40%" or customer.tags contains "EP" or customer.tags contains "40% Industry" %}
+        {% assign priceMultiplier = 0.6 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "Industry" or customer.tags contains "Wholesale" or customer.tags contains "50% EP & Wholesale" %}
+        {% assign priceMultiplier = 0.5 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+      
+      {% if customer.tags contains "Grassroots" or customer.tags contains "60% Grassroots & OEM" %}
+        {% assign priceMultiplier = 0.4 %}
+        {% assign exceptionPricingMult = 0.9 %}
+      {% endif %}
+
+ 
+
+        {% if customer.tags contains "10%" or customer.tags contains "Frame Owner" or customer.tags contains "10% Locals" or customer.tags contains "10% Frame Owner" or customer.tags contains "20%" or customer.tags contains "30%" or customer.tags contains "40%" or customer.tags contains "EP" or customer.tags contains "Grassroots" or customer.tags contains "20% Good Guy" or customer.tags contains "60% Grassroots & OEM" or customer.tags contains "30% Friends & Family" or customer.tags contains "40% Industry"%}
+          {% if product.tags contains "Belt" or product.tags contains "Frame" or product.tags contains "Pin" or product.tags contains "Chain stay protector" or product.tags contains "Chain tug" or product.tags contains "Bushing removal tool" or product.tags contains "Bushing installation tool"%}
+            <span class="ProductMeta__Price Price Price--highlight Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | times: exceptionPricingMult | money_without_trailing_zeros }}</span>
+            <span class="ProductMeta__Price Price Price--compareAt Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+          {% elsif product.tags contains "nosale"%}
+      		<span class="ProductMeta__Price Price Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+          {% else %}
+            <span class="ProductMeta__Price Price Price--highlight Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | times: priceMultiplier | money_without_trailing_zeros }}</span>
+            <span class="ProductMeta__Price Price Price--compareAt Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+          {% endif %}
+        {% elsif customer.tags contains "Wholesale" or customer.tags contains "Industry" or customer.tags contains "50% EP & Wholesale" %}
+          {% if product.tags contains "BC Frame" %} 
+            <span class="ProductMeta__Price Price Price--highlight Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | times: 0.7315789 | money_without_trailing_zeros }}</span>
+            <span class="ProductMeta__Price Price Price--compareAt Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+          {% elsif product.tags contains "Taiwanese Frame" %}
+            <span class="ProductMeta__Price Price Price--highlight Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | times: 0.7 | money_without_trailing_zeros }}</span>
+            <span class="ProductMeta__Price Price Price--compareAt Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+          {% elsif  product.tags contains "Belt" or product.tags contains "Pin" or product.tags contains "Chain stay protector" or product.tags contains "Chain tug" or product.tags contains "Bushing removal tool" or product.tags contains "Bushing installation tool" %}
+            <span class="ProductMeta__Price Price Price--highlight Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | times: exceptionPricingMult | money_without_trailing_zeros }}</span>
+            <span class="ProductMeta__Price Price Price--compareAt Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+          {% elsif product.tags contains "nosale"%}
+      		<span class="ProductMeta__Price Price Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+          {% else %}
+            <span class="ProductMeta__Price Price Price--highlight Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | times: priceMultiplier | money_without_trailing_zeros }}</span>
+            <span class="ProductMeta__Price Price Price--compareAt Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+          {% endif %}
+      
+        {% else %}
+          <span class="ProductMeta__Price Price Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+        {% endif %}
+      {% endif %}
+      <!--END OF CODE THAT TAYLOR WROTE TO REPLACE IT...-->
+      
+    
+      
+          <!--ADD "CAD" TO THE END OF THE PRICE. WJW.-->
+      <span class="ProductMeta__Price Price Text--subdued u-h4"> &nbsp; CAD</span>
+      
+    </div>
+
+  
+  {%- endif -%}
+
+  {%- if show_description and section.settings.description_below_add_to_cart == false and product.description != blank -%}
+    <div class="ProductMeta__Description Rte">
+      {{ product.description }}
+    </div>
+  {%- endif -%}
+</div>

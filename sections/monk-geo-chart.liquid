@@ -1,0 +1,126 @@
+<section class="Section Section--spacingNormal">
+  <header class="SectionHeader SectionHeader--center">
+  <div class="Container">
+          <h3 class="SectionHeader__Heading Heading u-h3">{{product.title}} Geometry</h3>
+        </div>
+      </header>
+  <section class="single-product" style="max-width: 2000px; margin: auto;">
+    <div class="ct-button-container geom-button">
+      <button id="show-chart" onclick="displayGeom(event, 'mobile-chart','hide-chart', 'show-chart')">Show Diagram</button>
+      <button id="hide-chart" onclick="hideGeom(event, 'mobile-chart','hide-chart', 'show-chart')" style="display:none;">Hide Diagram</button>
+    </div>
+    <div class="ct-table-img small-screen" id="mobile-chart" style="display:none">
+      <img class="ct-fullwidth-img" src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/chromag-bike-geo-all-dims.png?2170">
+    </div>
+    
+<!--
+IN ORDER TO MAKE CHANGES TO THE CODE BELOW, CRANKTANK HAS MADE A "CODE BUILDER" IN GOOGLE SHEETS. 
+CHECK OUT THE FOLLOWING SPREADSHEET IN ORDER TO MAKE CHANGES. FEEL FREE TO COPY / PASTE CODE FROM THAT
+SHEET INTO THIS SECTION AND SAVE APPROPRIATELY
+SHEET: https://docs.google.com/spreadsheets/d/1OSOhA0Uz77vWzxYGsOJv11PYZvEYBxzo/edit#gid=2074331469
+-->
+    
+    
+    
+    <div class="ct-geom-wrapper">
+      <div class="ct-table-container geom-specs">
+        <span>Show: <button id="show-cm" onclick="displayCm(event, 'cm-chart', 'in-chart', 'show-cm', 'show-in')" style="border-bottom: 2px solid #000;">MM</button> | <button id="show-in" onclick="displayIn(event, 'cm-chart', 'in-chart', 'show-cm', 'show-in')">IN</button></span>
+        
+        
+        <!--START OF MM CHART-->
+        <table class="ct-table" id="cm-chart">
+          <tr>
+            <th class="ct-table-header-first ct-first-col">Frame Size</th>
+            <th class="ct-table-header tooltipone">X-Short<span class="tooltiptextone">Typical Rider Height: 156cm - 170cm</span></th>
+            <th class="ct-table-header tooltiptwo">Short<span class="tooltiptexttwo">Typical Rider Height: 165cm - 178cm</span></th>
+            <th class="ct-table-header tooltipthree">Long<span class="tooltiptextthree">Typical Rider Height: 171cm - 187cm</span></th>
+            <th class="ct-table-header tooltipfour">X-Long<span class="tooltiptextfour">Typical Rider Height: 183cm - 193cm</span></th>
+          </tr>
+          <!--PASTE MM CHART CODE BELOW-->
+          <tr id="ct-row-a" onmouseover="surface('ct-m-a', 'ct-m-all', 'geom-icon-a', 'ct-row-a')"onmouseout="hide('ct-m-a', 'ct-m-all', 'ct-row-a', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-a">Stack</span></td><td class="ct-table-data">555</td><td class="ct-table-data">555</td><td class="ct-table-data">555</td><td class="ct-table-data">555</td></tr>
+          <tr id="ct-row-b" onmouseover="surface('ct-m-b', 'ct-m-all', 'geom-icon-b', 'ct-row-b')"onmouseout="hide('ct-m-b', 'ct-m-all', 'ct-row-b', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-b">Reach</span></td><td class="ct-table-data">385</td><td class="ct-table-data">410</td><td class="ct-table-data">435</td><td class="ct-table-data">460</td></tr>
+          <tr id="ct-row-c" onmouseover="surface('ct-m-c', 'ct-m-all', 'geom-icon-c', 'ct-row-c')"onmouseout="hide('ct-m-c', 'ct-m-all', 'ct-row-c', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-c">Effective Top Tube</span></td><td class="ct-table-data">520</td><td class="ct-table-data">545</td><td class="ct-table-data">570</td><td class="ct-table-data">595</td></tr>
+          <tr id="ct-row-d" onmouseover="surface('ct-m-d', 'ct-m-all', 'geom-icon-d', 'ct-row-d')"onmouseout="hide('ct-m-d', 'ct-m-all', 'ct-row-d', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-d">Head Tube</span></td><td class="ct-table-data">95</td><td class="ct-table-data">95</td><td class="ct-table-data">95</td><td class="ct-table-data">95</td></tr>
+          <tr id="ct-row-e" onmouseover="surface('ct-m-e', 'ct-m-all', 'geom-icon-e', 'ct-row-e')"onmouseout="hide('ct-m-e', 'ct-m-all', 'ct-row-e', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-e">Wheel base</span></td><td class="ct-table-data">993</td><td class="ct-table-data">1018</td><td class="ct-table-data">1043</td><td class="ct-table-data">1068</td></tr>
+          <tr id="ct-row-f" onmouseover="surface('ct-m-f', 'ct-m-all', 'geom-icon-f', 'ct-row-f')"onmouseout="hide('ct-m-f', 'ct-m-all', 'ct-row-f', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-f">BB Drop</span></td><td class="ct-table-data">30</td><td class="ct-table-data">40</td><td class="ct-table-data">50</td><td class="ct-table-data">60</td></tr>
+          <tr id="ct-row-g" onmouseover="surface('ct-m-g', 'ct-m-all', 'geom-icon-g', 'ct-row-g')"onmouseout="hide('ct-m-g', 'ct-m-all', 'ct-row-g', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-g">BB Height</span></td><td class="ct-table-data">318</td><td class="ct-table-data">318</td><td class="ct-table-data">318</td><td class="ct-table-data">318</td></tr>
+          <tr id="ct-row-h" onmouseover="surface('ct-m-h', 'ct-m-all', 'geom-icon-h', 'ct-row-h')"onmouseout="hide('ct-m-h', 'ct-m-all', 'ct-row-h', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-h">Stand Over</span></td><td class="ct-table-data">618</td><td class="ct-table-data">618</td><td class="ct-table-data">618</td><td class="ct-table-data">618</td></tr>
+          <tr id="ct-row-i" onmouseover="surface('ct-m-i', 'ct-m-all', 'geom-icon-i', 'ct-row-i')"onmouseout="hide('ct-m-i', 'ct-m-all', 'ct-row-i', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-i">chain stay</span></td><td class="ct-table-data">381</td><td class="ct-table-data">381</td><td class="ct-table-data">381</td><td class="ct-table-data">381</td></tr>
+          <tr id="ct-row-j" onmouseover="surface('ct-m-j', 'ct-m-all', 'geom-icon-j', 'ct-row-j')"onmouseout="hide('ct-m-j', 'ct-m-all', 'ct-row-j', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-j">Seat Tube</span></td><td class="ct-table-data">309</td><td class="ct-table-data">309</td><td class="ct-table-data">309</td><td class="ct-table-data">309</td></tr>
+          <tr id="ct-row-k" onmouseover="surface('ct-m-k', 'ct-m-all', 'geom-icon-k', 'ct-row-k')"onmouseout="hide('ct-m-k', 'ct-m-all', 'ct-row-k', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-k">Head Angle</span></td><td colspan="5" class="ct-table-data ct-td-span">70&#176;</td></tr>
+          <!--<tr id="ct-row-l" onmouseover="surface('ct-m-l', 'ct-m-all', 'geom-icon-l', 'ct-row-l')"onmouseout="hide('ct-m-l', 'ct-m-all', 'ct-row-l', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-l">Fork Offset</span></td><td colspan="5" class="ct-table-data ct-td-span">29MM</td></tr>-->
+          <tr id="ct-row-m" onmouseover="surface('ct-m-m', 'ct-m-all', 'geom-icon-m', 'ct-row-m')"onmouseout="hide('ct-m-m', 'ct-m-all', 'ct-row-m', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-m">Seat Angle</span></td><td colspan="5" class="ct-table-data ct-td-span">76&#176;</td></tr>
+          <tr id="ct-row-n" onmouseover="surface('ct-m-n', 'ct-m-all', 'geom-icon-n', 'ct-row-n')"onmouseout="hide('ct-m-n', 'ct-m-all', 'ct-row-n', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-n">Wheel Size</span></td><td colspan="5" class="ct-table-data ct-td-span">26"</td></tr>
+          <!--END OF PASTED CODE-->
+        </table>
+        <!--END OF MM CHART-->
+
+        <!--START OF IN CHART-->
+        <table class="ct-table" id="in-chart" style="display:none;">
+          <tr>
+            <th class="ct-table-header-first ct-first-col">Frame Size</th>
+            <th class="ct-table-header tooltipone">X-Short<span class="tooltiptextone">Typical Rider Height: 5’2” - 5’7"</span></th>
+            <th class="ct-table-header tooltiptwo">Short<span class="tooltiptexttwo">Typical Rider Height: 5’5” - 5’10”</span></th>
+            <th class="ct-table-header tooltipthree">Long<span class="tooltiptextthree">Typical Rider Height: 5’8” - 6’2”</span></th>
+            <th class="ct-table-header tooltipfour">X-Long<span class="tooltiptextfour">Typical Rider Height: 6’ - 6’4”</span></th>
+          </tr>
+          <!--START OF IN CHART PASTED CODE-->
+          <tr id="ct-row-a-in" onmouseover="surface('ct-m-a', 'ct-m-all', 'geom-icon-a', 'ct-row-a-in')"onmouseout="hide('ct-m-a', 'ct-m-all', 'ct-row-a-in', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-a">Stack</span></td><td class="ct-table-data">21.8</td><td class="ct-table-data">21.8</td><td class="ct-table-data">21.8</td><td class="ct-table-data">21.8</td></tr>
+          <tr id="ct-row-b-in" onmouseover="surface('ct-m-b', 'ct-m-all', 'geom-icon-b', 'ct-row-b-in')"onmouseout="hide('ct-m-b', 'ct-m-all', 'ct-row-b-in', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-b">Reach</span></td><td class="ct-table-data">15.1</td><td class="ct-table-data">16.1</td><td class="ct-table-data">17.1</td><td class="ct-table-data">18.1</td></tr>
+          <tr id="ct-row-c-in" onmouseover="surface('ct-m-c', 'ct-m-all', 'geom-icon-c', 'ct-row-c-in')"onmouseout="hide('ct-m-c', 'ct-m-all', 'ct-row-c-in', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-c">Effective Top Tube</span></td><td class="ct-table-data">20.4</td><td class="ct-table-data">21.4</td><td class="ct-table-data">22.4</td><td class="ct-table-data">23.4</td></tr>
+          <tr id="ct-row-d-in" onmouseover="surface('ct-m-d', 'ct-m-all', 'geom-icon-d', 'ct-row-d-in')"onmouseout="hide('ct-m-d', 'ct-m-all', 'ct-row-d-in', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-d">Head Tube</span></td><td class="ct-table-data">3.7</td><td class="ct-table-data">3.7</td><td class="ct-table-data">3.7</td><td class="ct-table-data">3.7</td></tr>
+          <tr id="ct-row-e-in" onmouseover="surface('ct-m-e', 'ct-m-all', 'geom-icon-e', 'ct-row-e-in')"onmouseout="hide('ct-m-e', 'ct-m-all', 'ct-row-e-in', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-e">Wheel base</span></td><td class="ct-table-data">39.0</td><td class="ct-table-data">40.0</td><td class="ct-table-data">41.0</td><td class="ct-table-data">42.0</td></tr>
+          <tr id="ct-row-f-in" onmouseover="surface('ct-m-f', 'ct-m-all', 'geom-icon-f', 'ct-row-f-in')"onmouseout="hide('ct-m-f', 'ct-m-all', 'ct-row-f-in', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-f">BB Drop</span></td><td class="ct-table-data">1.1</td><td class="ct-table-data">1.5</td><td class="ct-table-data">1.9</td><td class="ct-table-data">2.3</td></tr>
+          <tr id="ct-row-g-in" onmouseover="surface('ct-m-g', 'ct-m-all', 'geom-icon-g', 'ct-row-g-in')"onmouseout="hide('ct-m-g', 'ct-m-all', 'ct-row-g-in', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-g">BB Height</span></td><td class="ct-table-data">12.5</td><td class="ct-table-data">12.5</td><td class="ct-table-data">12.5</td><td class="ct-table-data">12.5</td></tr>
+          <tr id="ct-row-h-in" onmouseover="surface('ct-m-h', 'ct-m-all', 'geom-icon-h', 'ct-row-h-in')"onmouseout="hide('ct-m-h', 'ct-m-all', 'ct-row-h-in', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-h">Stand Over</span></td><td class="ct-table-data">24.3</td><td class="ct-table-data">24.3</td><td class="ct-table-data">24.3</td><td class="ct-table-data">24.3</td></tr>
+          <tr id="ct-row-i-in" onmouseover="surface('ct-m-i', 'ct-m-all', 'geom-icon-i', 'ct-row-i-in')"onmouseout="hide('ct-m-i', 'ct-m-all', 'ct-row-i-in', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-i">chain stay</span></td><td class="ct-table-data">15.0</td><td class="ct-table-data">15.0</td><td class="ct-table-data">15.0</td><td class="ct-table-data">15.0</td></tr>
+          <tr id="ct-row-j-in" onmouseover="surface('ct-m-j', 'ct-m-all', 'geom-icon-j', 'ct-row-j-in')"onmouseout="hide('ct-m-j', 'ct-m-all', 'ct-row-j-in', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-j">Seat Tube</span></td><td class="ct-table-data">12.1</td><td class="ct-table-data">12.1</td><td class="ct-table-data">12.1</td><td class="ct-table-data">12.1</td></tr>
+          <tr id="ct-row-k-in" onmouseover="surface('ct-m-k', 'ct-m-all', 'geom-icon-k', 'ct-row-k-in')"onmouseout="hide('ct-m-k', 'ct-m-all', 'ct-row-k-in', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-k">Head Angle</span></td><td colspan="5" class="ct-table-data ct-td-span">70&#176;</td></tr>
+          <!--<tr id="ct-row-l-in" onmouseover="surface('ct-m-l', 'ct-m-all', 'geom-icon-l', 'ct-row-l-in')"onmouseout="hide('ct-m-l', 'ct-m-all', 'ct-row-l-in', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-l">Fork Offset</span></td><td colspan="5" class="ct-table-data ct-td-span">29MM</td></tr>-->
+          <tr id="ct-row-m-in" onmouseover="surface('ct-m-m', 'ct-m-all', 'geom-icon-m', 'ct-row-m-in')"onmouseout="hide('ct-m-m', 'ct-m-all', 'ct-row-m-in', 'even')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-m">Seat Angle</span></td><td colspan="5" class="ct-table-data ct-td-span">76&#176;</td></tr>
+          <tr id="ct-row-n-in" onmouseover="surface('ct-m-n', 'ct-m-all', 'geom-icon-n', 'ct-row-n-in')"onmouseout="hide('ct-m-n', 'ct-m-all', 'ct-row-n-in', 'odd')"><td class="ct-table-data ct-first-col"><span class="geom-table-icon" id="geom-icon-n">Wheel Size</span></td><td colspan="5" class="ct-table-data ct-td-span">26"</td></tr>
+          <!--END OF IN CHART PASTED CODE-->
+        </table>
+        <!--END OF IN CHART-->
+
+      </div>
+      
+      <!--START OF IMAGE HOVER-OVER CONTAINER / CHART-->
+      <div class="ct-img-float-container">
+        <div class="ct-table-img big-screen">
+          <!--<span class="ct-geo-img-container-full" id="ct-m-all"><img class="ct-fullwidth-img" src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/new_base.png?3114"></span>-->
+          <span class="ct-geo-img-container-full" id="ct-m-all"><img class="ct-fullwidth-img" src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/Website-Bike-Geo-FINAL_c35cfd81-8f45-4759-9fcc-d3794e3a6727.png?4547"></span>
+          <span class="ct-geo-img-container" id="ct-g-grey"><img class="ct-fullwidth-img" src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/chromag-bike-geo-base-image.png?2170"></span>
+          <!--START OF PASTED CODE FOR IMAGE HOVER OVER CONTAINER / CHART-->
+          <span class="ct-geo-img-container" id="ct-m-a"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/stack.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-b"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/reach.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-c"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/effective-top-tube.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-d"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/head-tube.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-e"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/wheel-base.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-f"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/bb-drop.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-g"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/bb-height.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-h"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/stand-over.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-i"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/chain-stay.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-j"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/seat-tube.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-k"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/head-angle.png?2336"></span>
+          <!--<span class="ct-geo-img-container" id="ct-m-l"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/fork-offset.png?2336"></span>-->
+          <span class="ct-geo-img-container" id="ct-m-m"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/seat-angle.png?2336"></span>
+          <span class="ct-geo-img-container" id="ct-m-n"><img src="https://cdn.shopify.com/s/files/1/0052/2783/9586/files/wheel-size.png?3089"></span>
+          <!--END OF PASTED CODE FOR IMAGE HOVER OVER CONTAINER / CHART-->
+        </div>
+      </div>
+      <!--END OF IMAGE HOVER-OVER CONTAINER / CHART-->
+    </div>
+  </section>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
